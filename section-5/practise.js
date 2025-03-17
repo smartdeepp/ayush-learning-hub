@@ -201,8 +201,8 @@ console.log(canVote);
 console.log(canVote2);
 
 // Multiple statements
-const auth = false;
-let redirect;
+const auth = true;
+// let redirect;
 // if(auth){
 //     alert('Welcome to the dashboard');
 //     redirect ='/dashboard';
@@ -213,6 +213,11 @@ let redirect;
 
 // }
 
-const redirect = auth ? {} : {}
+const redirect = auth 
+? (alert('welcome to my dashboard'), '/dashboard')
+: (alert('access denied'), '/login');
 
 console.log(redirect);
+auth ? console.log('Welcome to the dashboard') : null;
+auth && console.log('welcome to the dashboard');
+
