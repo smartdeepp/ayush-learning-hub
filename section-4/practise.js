@@ -4,9 +4,9 @@ function sayHello(){
 }
 sayHello();
 function add(num1, num2){
-    console.log(num1 + num2);
+    return num1 + num2;
 }
-add(5,10);
+console.log(add(10,20));
 
 function subtract(num1, num2){
     return num1 - num2;
@@ -20,7 +20,8 @@ function registerUser(user = 'Bot'){
     // if(!user){
     //     user = 'Bot';
     // }
-    return user+ ' is registered';
+    // return user+ ' is registered';
+    return `${user} is registered`;
 }
 
 console.log(registerUser());
@@ -78,11 +79,11 @@ if (true){
     console.log(x, 'in block')
 }
 
-function add(){
-    const y =50;
-    console.log(y);
-}
-add();
+// function add(){
+//     const y =50;
+//     console.log(y);
+// }
+// add();
  
 //Block Scope
 const y = 100;
@@ -126,7 +127,8 @@ first();
 
 //Function Declaration 
 function addDollarSign(value){
-    return '$'+ value;
+    // return '$'+ value;
+    return `$${value}`;
 }
 console.log(addDollarSign(200));
 

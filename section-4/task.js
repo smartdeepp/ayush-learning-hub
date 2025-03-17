@@ -10,7 +10,8 @@ console.log(`The length of the string: "${x}" is ${getLength(x)}`);
 const y = 'I was hopping that you would call';
 
 function concat(x, y) {
-    return x + y;
+    // return x + y;
+    return `${x}${y}`;
 }
 console.log(`The result of the concatenation of the strings: "${x}" and "${y}" is "${concat(x, y)}"`);
 
