@@ -14,7 +14,7 @@ for( let i = 1; i<=100; i++){
 }
 // Challenge 2
 //Take the `people` array and create an array called `youngPeople` that stores objects with ONLY `name` and `email` properties of all the people that are 25 and under. The `name` property should have their first and last name.
-const people = [
+const peoples = [
     {
       firstName: 'John',
       lastName: 'Doe',
@@ -52,7 +52,7 @@ const people = [
     },
   ];
   
-const youngPeople = people
+const youngPeople = peoples
 .filter((person)=> person.age<=25 )
 .map((person) => ({
     name: `${person.firstName} ${person.lastName}`,
