@@ -61,13 +61,13 @@ console.log(keys);
 
 
 // Data setup for matrix-related functions
-const A = [
+const matrices1 = [
     [1, 2, 3],
     [4, 5, 6],
     [7, 8, 9]
 ];
 
-const B = [
+const matrices2 = [
     [9, 8, 7],
     [6, 5, 4],
     [3, 2, 1]
@@ -88,7 +88,7 @@ function addMatrices(A, B) {
     }
     return result;
 }
-const added = addMatrices(A, B);
+const added = addMatrices(matrices1, matrices2);
 console.log(added);
 
 
@@ -108,7 +108,7 @@ function multiplyMatrices(A, B) {
     }
     return result;
 }
-const multiplied = multiplyMatrices(A, B);
+const multiplied = multiplyMatrices(matrices1, matrices2);
 console.log(multiplied);
 
 // Program to Find Transpose of a Matrix
@@ -123,7 +123,7 @@ function transposeMatrix(A) {
     }
     return result;
 }
-const result2 = transposeMatrix(A);
+const result2 = transposeMatrix(matrices1);
 console.log(result2);
 
 
@@ -146,7 +146,7 @@ function charFrequency(str) {
 console.log(charFrequency(sampleString));
 
 // Program to Count the Number of Vowels, Consonants in a String
-function countVowelsConsonants(str) {
+function countVowelsAndConsonants(str) {
     let vowels = 'aeiouAEIOU';
     let vowelCount = 0;
     let consonantCount = 0;
@@ -163,7 +163,7 @@ function countVowelsConsonants(str) {
 return { vowels:vowelCount, consonants: consonantCount};
 
 }
-console.log(countVowelsConsonants(sampleString));
+console.log(countVowelsAndConsonants(sampleString));
 
 
 // Program to Remove All Characters in a String Except Alphabet
@@ -201,25 +201,16 @@ let numbers = [5, 3, 8, 1, 10];
 
 
 // Program to Calculate Average Using Arrays
-
-function calculateAverage(arr) {
-    let sum = 0;
-    for(let num of arr){
-        sum += num;
-    }
-    return sum / arr.length;
+function calculateAverage(arr){
+    return arr.reduce((acc, curr) => acc + curr, 0) / arr.length;
 }
 console.log(calculateAverage(numbers));
 
 // Program to Find Largest & Smallest Element of an Array
 
-function findMinMax(arr) {
-    let min = arr[0];
-    let max = arr[0];
-    for(let num of arr){
-        if(num < min) min = num;
-        if(num > max) max = num;
-    }
+function findMinMax(arr){
+    let min = Math.min(...arr);
+    let max = Math.max(...arr);
     return {min, max};
 }
 console.log(findMinMax(numbers));
