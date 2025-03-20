@@ -237,14 +237,7 @@ const squareAndDouble = numbers1
 
 //same but in detail
 const squareAndDouble2 = numbers1
-.map( function (number) {
-    return Math.sqrt(number);
-
-})
-.map(function(sqrt){
-    return sqrt *2;
-
-});
+.map((number)  => Math.sqrt(number).map((sqrt) => sqrt *2));
 
 console.log(squareAndDouble);
 console.log(squareAndDouble2);
