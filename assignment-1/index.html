@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo app</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="todo-container">
+        <header class="todo-header">
+            <div class="date-section">
+                <span class="day">12</span>
+                <div class="date-details">
+                    <span class="month">JAN</span>
+                    <span class="year">2016</span>
+                </div>
+            </div>
+            <span class="day-of-week">TUESDAY</span>
+        </header>
+        <form id="item-form">
+        <div class="form-control">
+          <input
+            type="text"
+            class="form-input"
+            id="item-input"
+            name="item"
+            placeholder="Enter Item"
+          />
+        </div>
+     
+        
+        <ul class="todo-list">
+          <!-- <li><div class="checkbox-content">
+                <input class="checkbox" type="checkbox" id="task1" checked>Buy new sweatshirt </div>
+                <button type="button" class="delete-btn">❌<i class="fa-solid fa-xmark"></i></button>
+            </li> -->
+            <!--   <li >
+                <input class="checkbox" type="checkbox" id="task2" checked>
+            Begin promotional phase
+                <button type="button" class="delete-btn">❌</button>
+            </li>
+            <li >
+                <input class="checkbox" type="checkbox" id="task3">
+            Read an article
+                <button type="button" class="delete-btn">❌</button>
+            </li> -->
+            <!-- <li >
+                <input class="checkbox" type="checkbox" id="task4">
+            Try not to fall asleep
+                <button type="button" class="delete-btn">❌</button>
+            </li>
+            <li >
+                <input class="checkbox" type="checkbox" id="task5">
+            Watch 'Sherlock'
+                <button type="button" class="delete-btn">❌</button>
+            </li>
+            <li >
+                <input class="checkbox" type="checkbox" id="task6">
+            Begin QA for the product
+                <button type="button" class="delete-btn">❌</button>
+            </li>
+            <li >
+                <input class="checkbox" type="checkbox" id="task7">
+            Go for a walk
+                <button type="button" class="delete-btn">❌</button>
+            </li> -->
+        </ul>
+        <div class="form-control">
+            <button type ="submit"class="btn">+</button>
+            
+      <button type="button" id="clear" class="btn-clear">Clear All</button>
+        </div>
+        </form>
+    
+    <script src="script.js"></script>
+  </body>
+</html>
