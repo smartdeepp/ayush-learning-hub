@@ -1,0 +1,138 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.todo-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    height: 500px;
+    text-align: center;
+}
+.todo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.date-section {
+    display: flex;
+    align-items: center;
+}
+.day {
+    font-size: 24px;
+    font-weight: bold;
+}
+.date-details {
+    margin-left: 10px;
+    text-align: left;
+}
+.month, .year {
+    display: block;
+    font-size: 12px;
+    color: gray;
+}
+.day-of-week {
+    font-size: 12px;
+    color: gray;
+}
+.todo-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.todo-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    cursor: pointer;
+}
+.todo-item:last-child {
+    border-bottom: none;
+}
+li{
+    display: flex;
+    justify-content: space-between;
+}
+.completed {
+    text-decoration: line-through;
+    color: gray;
+}
+.check-icon {
+    float: right;
+    color: green;
+}
+
+.form-input {
+    width: 90%;
+    font-size: 14px;
+    margin-bottom: 20px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+  }
+  .btn-clear {
+    margin-top: 20px;
+    width: 100%;
+    font-size: 14px;
+    background-color: transparent;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .btn-clear:hover {
+    background-color: #f1f1f1;
+  }
+
+
+
+
+
+.btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+.delete-btn{
+    border: none;
+    background: none;
+    color: inherit;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+}
+
+.timestamp {
+    display: none;
+    font-size: 12px;
+    color: grey;
+    margin-left: 10px;
+}
+
+.checkbox{
+    margin-right:10px;
+}
+
+.checkbox-content:hover .timestamp {
+    display: inline;
+}
