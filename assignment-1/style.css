@@ -8,11 +8,15 @@ body {
     margin: 0;
 }
 .todo-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 400px;
+    height: 500px;
     text-align: center;
 }
 .todo-header {
@@ -68,9 +72,6 @@ li{
     float: right;
     color: green;
 }
-
-
-
 
 .form-input {
     width: 90%;

@@ -1,68 +1,71 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const elements = {
-   day: document.querySelector('.day'),
-   month: document.querySelector('.month'),
-   year: document.querySelector('.year'),
-   day0fWeek: document.querySelector('.day-of-week'),
-    };
-  const currentDate = new Date();
+// Constants
+const MONTH_NAMES = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+const DAY_NAMES = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
 
-  // Extract date parts
-  const day = currentDate.getDate();
-  const monthNames = [
-    'JAN',
-    'FEB',
-    'MAR',
-    'APR',
-    'MAY',
-    'JUN',
-    'JUL',
-    'AUG',
-    'SEP',
-    'OCT',
-    'NOV',
-    'DEC',
-  ];
-  const month = monthNames[currentDate.getMonth()];
-  const year = currentDate.getFullYear();
-  const dayNames = [
-    'SUNDAY',
-    'MONDAY',
-    'TUESDAY',
-    'WEDNESDAY',
-    'THURSDAY',
-    'FRIDAY',
-    'SATURDAY',
-  ];
-  const dayOfWeek = dayNames[currentDate.getDay()];
+// DOM Elements
+const elements = {
+    day: document.querySelector('.day'),
+    month: document.querySelector('.month'),
+    year: document.querySelector('.year'),
+    dayOfWeek: document.querySelector('.day-of-week'), 
+    itemForm: document.getElementById('item-form'),
+    itemInput: document.getElementById('item-input'),
+    itemList: document.querySelector('.todo-list'),
+    clearBtn: document.getElementById('clear')
+};
 
-  elements.day.innerText = day;
-  elements.month.innerText = month;
-  elements.year.innerText = year;
-  elements.day0fWeek.innerText = dayOfWeek;;
+function updateDateDisplay() {
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = MONTH_NAMES[currentDate.getMonth()];
+    const year = currentDate.getFullYear();
+    const dayOfWeek = DAY_NAMES[currentDate.getDay()];
 
-});
+    elements.day.textContent = day;
+    elements.month.textContent = month;
+    elements.year.textContent = year;
+    elements.dayOfWeek.textContent = dayOfWeek;
+}
 
-
-
-
-
-const itemForm = document.getElementById('item-form');
-const itemInput = document.getElementById('item-input');
-const itemList = document.querySelector('.todo-list');
-const clearBtn = document.getElementById('clear');
-
-
-
-function addItem(e){
+function addItem(e) {
     e.preventDefault();
-    const newItem = itemInput.value;
+    const newItem = elements.itemInput.value.trim();
 
-    if(newItem === ''){
+    if (!newItem) {
         alert('Please add an item');
         return;
     }
-    
+ 
+    addItemToDOM(newItem);
+    addItemToLocalStorage(newItem);
+
+    elements.itemInput.value = '';
+    checkUI();
+}
+
+function addItemToDOM(item){
+    const li = createTodoItem(item.text || item);
+    if (item.completed) {
+        const checkbox = li.querySelector('.checkbox');
+        checkbox.checked = true;
+        checkbox.parentElement.classList.add('completed');
+    }
+    elements.itemList.appendChild(li);
+ 
+}
+
+function addItemToLocalStorage(item){
+    let itemsFromStorage;
+    if(localStorage.getItem('items') === null){
+        itemsFromStorage = [];
+    } else{
+        itemsFromStorage = JSON.parse(localStorage.getItem('items'));
+    }
+    itemsFromStorage.push({text: item, completed: false});
+    localStorage.setItem('items', JSON.stringify(itemsFromStorage));
+}
+
+function createTodoItem(text) {
     const li = document.createElement('li');
     const now = new Date();
     const formattedDate = `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
@@ -70,29 +73,37 @@ function addItem(e){
     const checkboxContent = document.createElement('div');
     checkboxContent.className = 'checkbox-content';
     
-    const checkbox = createCheckbox('checkbox');
-    checkbox.id = 'task-' + Date.now();
+    const checkbox = createCheckbox();
+    const timestamp = createTimestamp(formattedDate);
     
-    const timestamp = document.createElement('span');
-    timestamp.className = 'timestamp';
-    timestamp.textContent = formattedDate;
+    checkboxContent.append(checkbox, document.createTextNode(text), timestamp);
+    li.append(checkboxContent, createButton('delete-btn'));
     
-    checkboxContent.appendChild(checkbox);
-    checkboxContent.appendChild(document.createTextNode(newItem));
-    checkboxContent.appendChild(timestamp);
-    
-    const button = createButton('delete-btn');
-    
-    li.appendChild(checkboxContent);
-    li.appendChild(button);
-
-    itemList.appendChild(li);
-
-    checkUI();
-    itemInput.value = '';
+    return li;
 }
 
+function createCheckbox() {
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'checkbox';
+    checkbox.id = 'task-' + Date.now();
+    
+    checkbox.addEventListener('change', (e) => {
+        const li = e.target.closest('li');
+        const text = e.target.parentElement.childNodes[1].textContent;
+        checkbox.parentElement.classList.toggle('completed', checkbox.checked);
+        updateItemInLocalStorage(text, checkbox.checked);
+    });
+    
+    return checkbox;
+}
 
+function createTimestamp(date) {
+    const timestamp = document.createElement('span');
+    timestamp.className = 'timestamp';
+    timestamp.textContent = date;
+    return timestamp;
+}
 
 function createButton(classes){
     const button = document.createElement('button');
@@ -101,54 +112,66 @@ function createButton(classes){
     return button;
 
 }
-function createCheckbox(classes){
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.className = classes;
-
-    // Add event listener to toggle strikethrough
-    checkbox.addEventListener('change', function () {
-        if (checkbox.checked) {
-            checkbox.parentElement.classList.add('completed');
-        } else {
-            checkbox.parentElement.classList.remove('completed');
-        }
-    });
-
-
-    return checkbox;
-}
 
 function removeItem(e){
     if(e.target.classList.contains('delete-btn')){
-        e.target.parentElement.remove();
+        const li = e.target.parentElement;
+        const itemText = li.querySelector('.checkbox-content').childNodes[1].textContent;
+        removeItemFromLocalStorage(itemText);
+        li.remove();
     };
     checkUI();
 }
 
 function clearAll(){
     if(confirm('Are you sure?')){
-    while(itemList.firstChild){
-        itemList.removeChild(itemList.firstChild);
+    while(elements.itemList.firstChild){
+        elements.itemList.removeChild(elements.itemList.firstChild);
     }
+    localStorage.removeItem('items');
     checkUI();
 }
 }
-
-
 
 function checkUI(){
     const items= document.querySelectorAll('li');
 
     if(items.length === 0){
-        clearBtn.style.display = 'none';
+        elements.clearBtn.style.display = 'none';
     } else{
-        clearBtn.style.display = 'block';
+        elements.clearBtn.style.display = 'block';
     }
 }
 
-//Event Listener
-itemForm.addEventListener('submit', addItem);
-itemList.addEventListener('click', removeItem);
-clearBtn.addEventListener('click', clearAll);
+function updateItemInLocalStorage(itemText, completed) {
+    let itemsFromStorage = JSON.parse(localStorage.getItem('items')) || [];
+    itemsFromStorage = itemsFromStorage.map(item => {
+        if (item.text === itemText) {
+            return { ...item, completed };
+        }
+        return item;
+    });
+    localStorage.setItem('items', JSON.stringify(itemsFromStorage));
+}
+
+function removeItemFromLocalStorage(itemText) {
+    let itemsFromStorage = JSON.parse(localStorage.getItem('items')) || [];
+    itemsFromStorage = itemsFromStorage.filter(item => item.text !== itemText);
+    localStorage.setItem('items', JSON.stringify(itemsFromStorage));
+}
+
+function loadItems() {
+    const itemsFromStorage = JSON.parse(localStorage.getItem('items')) || [];
+    itemsFromStorage.forEach(item => addItemToDOM(item));
+    checkUI();
+}
+
+// Event Listeners
+document.addEventListener('DOMContentLoaded', () => {
+    updateDateDisplay();
+    loadItems();
+});
+elements.itemForm.addEventListener('submit', addItem);
+elements.itemList.addEventListener('click', removeItem);
+elements.clearBtn.addEventListener('click', clearAll);
 checkUI();
